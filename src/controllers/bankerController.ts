@@ -1,0 +1,71 @@
+import { Request, Response, NextFunction } from 'express'
+import asyncHandler from '@middlewares/asyncHandler'
+import ErrorResponse from '@utils/ErrorResponse'
+
+// Dependency Injection
+import bankerService from '@services/bankerService'
+const { getBankersAsync, getBankerAsync, createBankerAsync, updateBankerAsync, deleteBankerAsync } = bankerService
+
+class BankerController {
+  // @desc      Get bankers
+  // @route     GET /api/v1/bankers
+  public getBankers = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const bankers = await getBankersAsync()
+
+    if (!bankers) {
+      return next(new ErrorResponse('Banker not found', 404))
+    }
+
+    res.json({ success: true, count: bankers.length, bankers })
+  })
+
+  // @desc      Get single banker
+  // @route     GET /api/v1/bankers/:bankerId
+  public getBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const banker = await getBankerAsync(req.params.bankerId)
+
+    if (!banker) {
+      return next(new ErrorResponse('Banker not found', 404))
+    }
+
+    res.json({ success: true, banker })
+  })
+
+  // @desc      Create banker
+  // @route     POST /api/v1/bankers
+  public createBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const banker = await createBankerAsync(req.body)
+
+    if (!banker) {
+      return next(new ErrorResponse('Banker not created', 500))
+    }
+
+    res.json({ success: true, banker })
+  })
+
+  // @desc      Update banker
+  // @route     PUT /api/v1/bankers/:bankerId
+  public updateBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const banker = await updateBankerAsync(req.params.bankerId, req.body)
+
+    if (!banker) {
+      return next(new ErrorResponse('Banker not found', 404))
+    }
+
+    res.json({ success: true, banker })
+  })
+
+  // @desc      Delete banker
+  // @route     DELETE /api/v1/bankers/:bankerId
+  public deleteBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const banker = await deleteBankerAsync(req.params.bankerId)
+
+    if (!banker) {
+      return next(new ErrorResponse('Banker not found', 404))
+    }
+
+    res.json({ success: true, banker: {} })
+  })
+}
+
+export default new BankerController()
