@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
-import asyncHandler from '@middlewares/asyncHandler'
-import ErrorResponse from '@utils/ErrorResponse'
+import { asyncHandler } from '@middlewares/asyncHandler'
+import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
-import clientService from '@services/clientService'
-const { getClientsAsync, getClientAsync, createClientAsync, updateClientAsync, deleteClientAsync } = clientService
+import { ClientService } from '@services/ClientService'
+const { getClientsAsync, getClientAsync, createClientAsync, updateClientAsync, deleteClientAsync } = new ClientService()
 
 class ClientController {
   // @desc      Get clients
@@ -68,4 +68,4 @@ class ClientController {
   })
 }
 
-export default new ClientController()
+export { ClientController }

@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
-import asyncHandler from '@middlewares/asyncHandler'
-import ErrorResponse from '@utils/ErrorResponse'
+import { asyncHandler } from '@middlewares/asyncHandler'
+import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
-import bankerService from '@services/bankerService'
-const { getBankersAsync, getBankerAsync, createBankerAsync, updateBankerAsync, deleteBankerAsync } = bankerService
+import { BankerService } from '@services/BankerService'
+const { getBankersAsync, getBankerAsync, createBankerAsync, updateBankerAsync, deleteBankerAsync } = new BankerService()
 
 class BankerController {
   // @desc      Get bankers
@@ -68,4 +68,4 @@ class BankerController {
   })
 }
 
-export default new BankerController()
+export { BankerController }

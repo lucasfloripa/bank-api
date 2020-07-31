@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
-import asyncHandler from '@middlewares/asyncHandler'
-import ErrorResponse from '@utils/ErrorResponse'
+import { asyncHandler } from '@middlewares/asyncHandler'
+import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
-import userService from '@services/userService'
-const { getUsersAsync, getUserAsync, createUserAsync, updateUserAsync, deleteUserAsync } = userService
+import { UserService } from '@services/UserService'
+const { getUsersAsync, getUserAsync, deleteUserAsync } = new UserService()
 
 class UserController {
   // @desc      Get users
@@ -31,30 +31,6 @@ class UserController {
     res.json({ success: true, user })
   })
 
-  // @desc      Create user
-  // @route     POST /api/v1/users
-  public createUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const user = await createUserAsync(req.body)
-
-    if (!user) {
-      return next(new ErrorResponse('User not created', 500))
-    }
-
-    res.json({ success: true, user })
-  })
-
-  // @desc      Update user
-  // @route     PUT /api/v1/users/:userId
-  public updateUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const user = await updateUserAsync(req.params.userId, req.body)
-
-    if (!user) {
-      return next(new ErrorResponse('User not found', 404))
-    }
-
-    res.json({ success: true, user })
-  })
-
   // @desc      Delete user
   // @route     DELETE /api/v1/users/:userId
   public deleteUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -68,4 +44,4 @@ class UserController {
   })
 }
 
-export default new UserController()
+export { UserController }

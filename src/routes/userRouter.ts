@@ -1,21 +1,19 @@
 import express from 'express'
-import debtRouter from '@routes/debtRouter'
+import { debtRouter } from '@routes/debtRouter'
 
 // Dependecy Injectiopn
-import UserController from '@controllers/userController'
-const { getUsers, getUser, createUser, updateUser, deleteUser } = UserController
+import { UserController } from '@controllers/UserController'
+const { getUsers, getUser, deleteUser } = new UserController()
 
-const router = express.Router()
+const userRouter = express.Router()
 
 // Re-route into other resource routers
-router.use('/:userId/debts', debtRouter)
+userRouter.use('/:userId/debts', debtRouter)
 
-router.route('/')
+userRouter.route('/')
   .get(getUsers)
-  .post(createUser)
-router.route('/:userId')
+userRouter.route('/:userId')
   .get(getUser)
-  .put(updateUser)
   .delete(deleteUser)
 
-export default router
+export { userRouter }

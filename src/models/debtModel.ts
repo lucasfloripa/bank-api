@@ -1,12 +1,12 @@
-import { Document, Schema, Model, model } from 'mongoose'
+import { Document, Schema, Types, Model, model } from 'mongoose'
 import { IDebtModel } from '@interfaces/debtInterface'
 
 export interface DebtModel extends IDebtModel, Document {}
 
 const DebtSchema: Schema<DebtModel> = new Schema({
   userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: Types.ObjectId,
+    ref: 'Client',
     required: true
   },
   reason: {
@@ -27,4 +27,6 @@ const DebtSchema: Schema<DebtModel> = new Schema({
   }
 }, { timestamps: true })
 
-export const Debt: Model<DebtModel> = model<DebtModel>('Debt', DebtSchema)
+const Debt: Model<DebtModel> = model<DebtModel>('Debt', DebtSchema)
+
+export { Debt }

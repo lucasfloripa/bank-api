@@ -1,6 +1,6 @@
-import app from './app'
+import { App } from './App'
 
-const server = app.listen(
+const server = new App().express.listen(
   process.env.PORT || 5000, () =>
     console.log(`Server running in ${process.env.NODE_ENV}, mode on port ${process.env.PORT || 5000}`)
 )

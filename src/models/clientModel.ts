@@ -11,4 +11,6 @@ User.discriminator(
   })
 )
 
-export const Client: Model<ClientModel> = model<ClientModel>('Client')
+const Client: Model<ClientModel> = model<ClientModel>('Client')
+
+export { Client }

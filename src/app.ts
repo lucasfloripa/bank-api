@@ -2,11 +2,11 @@ import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 import cors from 'cors'
-import connectDB from './config/database'
-import userRouter from '@routes/userRouter'
-import clientRouter from '@routes/clientRouter'
-import debtRouter from '@routes/debtRouter'
-import bankerRouter from '@routes/bankerRouter'
+import { connectDB } from './config/database'
+import { userRouter } from '@routes/userRouter'
+import { clientRouter } from '@routes/clientRouter'
+import { debtRouter } from '@routes/debtRouter'
+import { bankerRouter } from '@routes/bankerRouter'
 
 class App {
   public express: express.Application
@@ -40,4 +40,4 @@ class App {
   }
 }
 
-export default new App().express
+export { App }

@@ -1,17 +1,17 @@
 import express from 'express'
 
 // Dependecy Injectiopn
-import ClientController from '@controllers/clientController'
-const { getClients, getClient, createClient, updateClient, deleteClient } = ClientController
+import { ClientController } from '@controllers/ClientController'
+const { getClients, getClient, createClient, updateClient, deleteClient } = new ClientController()
 
-const router = express.Router()
+const clientRouter = express.Router()
 
-router.route('/')
+clientRouter.route('/')
   .get(getClients)
   .post(createClient)
-router.route('/:clientId')
+clientRouter.route('/:clientId')
   .get(getClient)
   .put(updateClient)
   .delete(deleteClient)
 
-export default router
+export { clientRouter }

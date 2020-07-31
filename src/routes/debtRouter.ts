@@ -1,15 +1,15 @@
 import express from 'express'
-import DebtController from '@controllers/debtController'
-const { getDebts, getDebt, craeteDebt, updateDebt, deleteDebt } = DebtController
+import { DebtController } from '@controllers/DebtController'
+const { getDebts, getDebt, craeteDebt, updateDebt, deleteDebt } = new DebtController()
 
-const router = express.Router({ mergeParams: true })
+const debtRouter = express.Router({ mergeParams: true })
 
-router.route('/')
+debtRouter.route('/')
   .get(getDebts)
   .post(craeteDebt)
-router.route('/:debtId')
+debtRouter.route('/:debtId')
   .get(getDebt)
   .put(updateDebt)
   .delete(deleteDebt)
 
-export default router
+export { debtRouter }

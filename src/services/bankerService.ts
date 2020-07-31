@@ -55,4 +55,4 @@ class BankerService {
   }
 }
 
-export default new BankerService()
+export { BankerService }

@@ -52,4 +52,6 @@ const UserSchema: Schema<UserModel> = new Schema(
   userOptions
 )
 
-export const User: Model<UserModel> = model<UserModel>('User', UserSchema)
+const User: Model<UserModel> = model<UserModel>('User', UserSchema)
+
+export { User }

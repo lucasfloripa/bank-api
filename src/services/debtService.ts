@@ -61,4 +61,4 @@ class DebtService {
   }
 }
 
-export default new DebtService()
+export { DebtService }

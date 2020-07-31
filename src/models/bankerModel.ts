@@ -11,4 +11,6 @@ User.discriminator(
   })
 )
 
-export const Banker: Model<BankerModel> = model<BankerModel>('Banker')
+const Banker: Model<BankerModel> = model<BankerModel>('Banker')
+
+export { Banker }
