@@ -1,6 +1,6 @@
 export interface IDebtModel {
-  userId: string
+  clientId: string
+  bankerId: string
   reason: string
   value: number
-  paid: boolean
 }

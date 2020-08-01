@@ -39,7 +39,7 @@ class BankerService {
       return false
     }
 
-    banker = await Banker.findByIdAndUpdate(bankerId, updatedBanker)
+    banker = await Banker.findByIdAndUpdate(bankerId, updatedBanker, { new: true, runValidators: true })
 
     return banker
   }

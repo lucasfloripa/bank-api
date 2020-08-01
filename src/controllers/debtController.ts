@@ -2,9 +2,12 @@ import { Request, Response, NextFunction } from 'express'
 import { asyncHandler } from '@middlewares/asyncHandler'
 import { ErrorResponse } from '@utils/ErrorResponse'
 
+// Interfaces
+import { IDebtModel } from '@interfaces/debtInterface'
+
 // Dependency Injection
 import { DebtService } from '@services/DebtService'
-const { getDebtAsync, getDebtsAsync, createDebtAsync, updateDebtAsync, deleteDebtAsync } = new DebtService()
+const { getDebtAsync, getDebtsAsync, createDebtAsync, updateDebtAsync, deleteDebtAsync, pushNewDebtToClient } = new DebtService()
 
 class DebtController {
   // @desc      Get debts
@@ -35,19 +38,33 @@ class DebtController {
   // @desc      Create debt
   // @route     POST /api/v1/debts/
   public craeteDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const debt = await createDebtAsync(req.body)
+    const { clientId, bankerId, reason, value } = req.body as IDebtModel
+
+    const newDebt: IDebtModel = { clientId, bankerId, reason, value }
+
+    const debt = await createDebtAsync(newDebt)
 
     if (!debt) {
-      return next(new ErrorResponse('Debts not created', 404))
+      return next(new ErrorResponse('Debts not created', 500))
     }
 
-    res.json({ sucess: true, debt })
+    const client = await pushNewDebtToClient(clientId, debt._id)
+
+    if (!client) {
+      return next(new ErrorResponse('Client not found', 500))
+    }
+
+    res.json({ sucess: true, debt, client })
   })
 
   // @desc      Update debt
   // @route     PUT /api/v1/debts/:debtId
   public updateDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const debt = await updateDebtAsync(req.params.debtId, req.body)
+    const { clientId, bankerId, reason, value } = req.body as IDebtModel
+
+    const updateDebt: IDebtModel = { clientId, bankerId, reason, value }
+
+    const debt = await updateDebtAsync(req.params.debtId, updateDebt)
 
     if (!debt) {
       return next(new ErrorResponse('Debt not found', 404))

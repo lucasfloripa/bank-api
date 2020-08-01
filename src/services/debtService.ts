@@ -1,4 +1,5 @@
 import { Debt } from '@models/debtModel'
+import { Client } from '@models/clientModel'
 import { IDebtModel } from '@interfaces/debtInterface'
 
 class DebtService {
@@ -45,7 +46,7 @@ class DebtService {
       return false
     }
 
-    debt = await Debt.findByIdAndUpdate(debtId, updatedDebt)
+    debt = await Debt.findByIdAndUpdate(debtId, updatedDebt, { new: true, runValidators: true })
 
     return debt
   }
@@ -58,6 +59,18 @@ class DebtService {
     }
 
     return await debt.remove()
+  }
+
+  public pushNewDebtToClient = async (clientId: string, debtId: string) => {
+    let client = await Client.findById(clientId)
+
+    if (!client) {
+      return false
+    }
+
+    client = await Client.findByIdAndUpdate(clientId, { $push: { debts: debtId } }, { new: true, runValidators: true })
+
+    return client
   }
 }
 

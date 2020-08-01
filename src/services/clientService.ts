@@ -39,7 +39,7 @@ class ClientService {
       return false
     }
 
-    client = await Client.findByIdAndUpdate(clientId, updatedClient)
+    client = await Client.findByIdAndUpdate(clientId, updatedClient, { new: true, runValidators: true })
 
     return client
   }
