@@ -32,6 +32,16 @@ const DebtSchema: Schema<DebtModel> = new Schema({
   }
 }, { timestamps: true })
 
+// Cascade remove debts Ref on clients when the debt is deleted
+DebtSchema.pre('remove', function (next) {
+  this.model('Client').update(
+    {},
+    { $pull: { debts: this._id } },
+    { multi: true },
+    next
+  )
+})
+
 const Debt: Model<DebtModel> = model<DebtModel>('Debt', DebtSchema)
 
 export { Debt }
