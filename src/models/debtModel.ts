@@ -4,9 +4,14 @@ import { IDebtModel } from '@interfaces/debtInterface'
 export interface DebtModel extends IDebtModel, Document {}
 
 const DebtSchema: Schema<DebtModel> = new Schema({
-  userId: {
+  clientId: {
     type: Types.ObjectId,
     ref: 'Client',
+    required: true
+  },
+  bankerId: {
+    type: Types.ObjectId,
+    ref: 'Banker',
     required: true
   },
   reason: {
@@ -26,6 +31,16 @@ const DebtSchema: Schema<DebtModel> = new Schema({
     default: false
   }
 }, { timestamps: true })
+
+// Cascade remove debts Ref on clients when the debt is deleted
+DebtSchema.pre('remove', function (next) {
+  this.model('Client').update(
+    {},
+    { $pull: { debts: this._id } },
+    { multi: true },
+    next
+  )
+})
 
 const Debt: Model<DebtModel> = model<DebtModel>('Debt', DebtSchema)
 
