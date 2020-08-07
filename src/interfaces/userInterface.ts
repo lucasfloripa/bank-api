@@ -4,7 +4,7 @@ export interface IUserModel {
   email: string
   password: string
   gender: Gender
-  birth: Date
+  birth: string
   address: IUserAddress
 }
 
