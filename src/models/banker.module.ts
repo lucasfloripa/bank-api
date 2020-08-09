@@ -1,6 +1,6 @@
 import { Document, Schema, Model, model } from 'mongoose'
-import { User } from '@models/userModel'
-import { IBankerModel } from '@interfaces/bankerInterface'
+import { User } from '@models/user.module'
+import { IBankerModel } from '@interfaces/banker.interface'
 
 export interface BankerModel extends IBankerModel, Document {}
 

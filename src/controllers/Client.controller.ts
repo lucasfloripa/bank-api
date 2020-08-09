@@ -3,7 +3,7 @@ import { asyncHandler } from '@middlewares/asyncHandler'
 import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
-import { ClientService } from '@services/ClientService'
+import { ClientService } from '@services/Client.service'
 const { getClientsAsync, getClientAsync, createClientAsync, updateClientAsync, deleteClientAsync } = new ClientService()
 
 class ClientController {

@@ -3,7 +3,7 @@ import { asyncHandler } from '@middlewares/asyncHandler'
 import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
-import { BankerService } from '@services/BankerService'
+import { BankerService } from '@services/Banker.service'
 const { getBankersAsync, getBankerAsync, createBankerAsync, updateBankerAsync, deleteBankerAsync } = new BankerService()
 
 class BankerController {

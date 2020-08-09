@@ -1,4 +1,4 @@
-import { IUserModel } from './userInterface'
+import { IUserModel } from './user.interface'
 
 export interface IClientModel extends IUserModel {
   debts: string[]

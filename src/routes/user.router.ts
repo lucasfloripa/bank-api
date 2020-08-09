@@ -1,8 +1,8 @@
 import express from 'express'
-import { debtRouter } from '@routes/debtRouter'
+import { debtRouter } from '@routes/debt.router'
 
 // Dependecy Injectiopn
-import { UserController } from '@controllers/UserController'
+import { UserController } from '@controllers/User.controller'
 const { getUsers, getUser, deleteUser } = new UserController()
 
 const userRouter = express.Router()

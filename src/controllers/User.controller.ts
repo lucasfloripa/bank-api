@@ -3,7 +3,7 @@ import { asyncHandler } from '@middlewares/asyncHandler'
 import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
-import { UserService } from '@services/UserService'
+import { UserService } from '@services/User.service'
 const { getUsersAsync, getUserAsync, deleteUserAsync } = new UserService()
 
 class UserController {

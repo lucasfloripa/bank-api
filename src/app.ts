@@ -3,10 +3,10 @@ import dotenv from 'dotenv'
 import morgan from 'morgan'
 import cors from 'cors'
 import { connectDB } from './config/database'
-import { userRouter } from '@routes/userRouter'
-import { clientRouter } from '@routes/clientRouter'
-import { debtRouter } from '@routes/debtRouter'
-import { bankerRouter } from '@routes/bankerRouter'
+import { userRouter } from '@routes/user.router'
+import { clientRouter } from '@routes/client.router'
+import { debtRouter } from '@routes/debt.router'
+import { bankerRouter } from '@routes/banker.router'
 
 class App {
   public express: express.Application

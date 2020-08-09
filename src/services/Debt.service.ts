@@ -1,6 +1,6 @@
-import { Debt } from '@models/debtModel'
-import { Client } from '@models/clientModel'
-import { IDebtModel } from '@interfaces/debtInterface'
+import { Debt } from '@models/debt.module'
+import { Client } from '@models/client.module'
+import { IDebtModel } from '@interfaces/debt.interface'
 
 class DebtService {
   public getDebtAsync = async (debtId: string) => {
