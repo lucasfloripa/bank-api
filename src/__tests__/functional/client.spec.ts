@@ -25,9 +25,9 @@ describe('Client Service Test', () => {
     await mongoose.connection.close()
   })
 
-  beforeEach(async () => [
+  beforeEach(async () => {
     await Client.deleteMany({})
-  ])
+  })
 
   it('create a new client', async () => {
     const client = await createClientAsync(clientsMock[0])

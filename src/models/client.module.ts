@@ -1,6 +1,6 @@
 import { Document, Schema, Types, Model, model } from 'mongoose'
-import { User } from '@models/userModel'
-import { IClientModel } from '@interfaces/clientInterface'
+import { User } from '@models/user.module'
+import { IClientModel } from '@interfaces/client.interface'
 
 export interface ClientModel extends IClientModel, Document {}
 

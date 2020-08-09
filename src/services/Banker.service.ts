@@ -1,5 +1,5 @@
-import { Banker } from '@models/bankerModel'
-import { IBankerModel } from '@interfaces/bankerInterface'
+import { Banker } from '@models/banker.module'
+import { IBankerModel } from '@interfaces/banker.interface'
 
 class BankerService {
   public getBankerAsync = async (bankerId: string) => {

@@ -1,4 +1,4 @@
-import { User } from '@models/userModel'
+import { User } from '@models/user.module'
 
 class UserService {
   public getUserAsync = async (userId: string) => {

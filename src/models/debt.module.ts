@@ -1,5 +1,5 @@
 import { Document, Schema, Types, Model, model } from 'mongoose'
-import { IDebtModel } from '@interfaces/debtInterface'
+import { IDebtModel } from '@interfaces/debt.interface'
 
 export interface DebtModel extends IDebtModel, Document {}
 

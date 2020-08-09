@@ -1,7 +1,7 @@
 import express from 'express'
 
 // Dependecy Injectiopn
-import { ClientController } from '@controllers/ClientController'
+import { ClientController } from '@controllers/Client.controller'
 const { getClients, getClient, createClient, updateClient, deleteClient } = new ClientController()
 
 const clientRouter = express.Router()

@@ -1,7 +1,7 @@
 import express from 'express'
 
 // Dependecy Injectiopn
-import { BankerController } from '@controllers/BankerController'
+import { BankerController } from '@controllers/Banker.controller'
 const { getBankers, getBanker, createBanker, updateBanker, deleteBanker } = new BankerController()
 
 const bankerRouter = express.Router()

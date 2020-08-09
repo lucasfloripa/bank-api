@@ -3,10 +3,10 @@ import { asyncHandler } from '@middlewares/asyncHandler'
 import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Interfaces
-import { IDebtModel } from '@interfaces/debtInterface'
+import { IDebtModel } from '@interfaces/debt.interface'
 
 // Dependency Injection
-import { DebtService } from '@services/DebtService'
+import { DebtService } from '@services/Debt.service'
 const { getDebtAsync, getDebtsAsync, createDebtAsync, updateDebtAsync, deleteDebtAsync, pushNewDebtToClient } = new DebtService()
 
 class DebtController {
@@ -37,7 +37,7 @@ class DebtController {
 
   // @desc      Create debt
   // @route     POST /api/v1/debts/
-  public craeteDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  public createDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const { clientId, bankerId, reason, value } = req.body as IDebtModel
 
     const newDebt: IDebtModel = { clientId, bankerId, reason, value }

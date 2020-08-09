@@ -1,5 +1,5 @@
-import { Client } from '@models/clientModel'
-import { IClientModel } from '@interfaces/clientInterface'
+import { Client } from '@models/client.module'
+import { IClientModel } from '@interfaces/client.interface'
 
 class ClientService {
   public getClientAsync = async (clientId: string) => {
