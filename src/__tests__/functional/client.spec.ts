@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import { Client } from '@models/clientModel'
-import { ClientService } from '@services/ClientService'
+import { Client } from '@models/client.module'
+import { ClientService } from '@services/Client.service'
 const { createClientAsync, getClientAsync, getClientsAsync, updateClientAsync, deleteClientAsync } = new ClientService()
 
 const clientsMock = [
