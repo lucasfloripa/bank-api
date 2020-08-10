@@ -1,13 +1,13 @@
 import mongoose from 'mongoose'
-import { Debt } from '@models/debtModel'
-import { Banker } from '@models/bankerModel'
-import { Client } from '@models/clientModel'
-import { ClientService } from '@services/ClientService'
-import { BankerService } from '@services/BankerService'
-import { DebtService } from '@services/DebtService'
+import { Debt } from '@models/debt.module'
+import { Banker } from '@models/banker.module'
+import { Client } from '@models/client.module'
+import { ClientService } from '@services/Client.service'
+import { BankerService } from '@services/Banker.service'
+import { DebtService } from '@services/Debt.service'
 const { createBankerAsync } = new BankerService()
 const { createClientAsync } = new ClientService()
-const { getDebtAsync, getDebtsAsync, createDebtAsync, updateDebtAsync, deleteDebtAsync, pushNewDebtToClient } = new DebtService()
+const { getDebtAsync, getDebtsAsync, createDebtAsync, updateDebtAsync, deleteDebtAsync } = new DebtService()
 
 const clientMock = { firstName: 'Lucas', lastName: 'Gonçalves', email: 'lucas.floripa@icloud.com', password: '123123', address: { street: 'Rua João Nilo Morfim', number: 65, complement: 'Bloco A-202', district: 'Nossa Senhora do Rosário', city: 'São José', state: 'Santa Catarina', country: 'Brasil' }, birth: '20/08/1990', gender: 1, debts: [] }
 
