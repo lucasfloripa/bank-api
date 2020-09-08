@@ -7,83 +7,100 @@ import { IDebtModel } from '@interfaces/debt.interface'
 
 // Dependency Injection
 import { DebtService } from '@services/Debt.service'
-const { getDebtAsync, getDebtsAsync, createDebtAsync, updateDebtAsync, deleteDebtAsync, pushNewDebtToClient } = new DebtService()
+const {
+  getDebtAsync,
+  getDebtsAsync,
+  createDebtAsync,
+  updateDebtAsync,
+  deleteDebtAsync,
+  pushNewDebtToClient
+} = new DebtService()
 
 class DebtController {
   // @desc      Get debts
   // @route     GET /api/v1/debts/
   // @route     GET /api/v1/users/:userId/debts
-  public getDebts = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const debts = await getDebtsAsync(req.params.userId)
+  getDebts = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const debts = await getDebtsAsync(req.params.userId)
 
-    if (!debts) {
-      return next(new ErrorResponse('Debts not found', 404))
+      if (!debts) {
+        return next(new ErrorResponse('Debts not found', 404))
+      }
+
+      res.json({ sucess: true, count: debts?.length, debts })
     }
-
-    res.json({ sucess: true, count: debts?.length, debts })
-  })
+  );
 
   // @desc      Get single debt
   // @route     GET /api/v1/debts/:debtId
-  public getDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const debt = await getDebtAsync(req.params.debtId)
+  getDebt = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const debt = await getDebtAsync(req.params.debtId)
 
-    if (!debt) {
-      return next(new ErrorResponse('Debt not found', 404))
+      if (!debt) {
+        return next(new ErrorResponse('Debt not found', 404))
+      }
+
+      res.json({ sucess: true, debt })
     }
-
-    res.json({ sucess: true, debt })
-  })
+  );
 
   // @desc      Create debt
   // @route     POST /api/v1/debts/
-  public createDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const { clientId, bankerId, reason, value } = req.body as IDebtModel
+  createDebt = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { clientId, bankerId, reason, value } = req.body as IDebtModel
 
-    const newDebt: IDebtModel = { clientId, bankerId, reason, value }
+      const newDebt: IDebtModel = { clientId, bankerId, reason, value }
 
-    const debt = await createDebtAsync(newDebt)
+      const debt = await createDebtAsync(newDebt)
 
-    if (!debt) {
-      return next(new ErrorResponse('Debts not created', 500))
+      if (!debt) {
+        return next(new ErrorResponse('Debts not created', 500))
+      }
+
+      const client = await pushNewDebtToClient(clientId, debt._id)
+
+      if (!client) {
+        return next(new ErrorResponse('Client not found', 500))
+      }
+
+      res.json({ sucess: true, debt })
     }
-
-    const client = await pushNewDebtToClient(clientId, debt._id)
-
-    if (!client) {
-      return next(new ErrorResponse('Client not found', 500))
-    }
-
-    res.json({ sucess: true, debt, client })
-  })
+  );
 
   // @desc      Update debt
   // @route     PUT /api/v1/debts/:debtId
-  public updateDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const { clientId, bankerId, reason, value } = req.body as IDebtModel
+  updateDebt = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { clientId, bankerId, reason, value } = req.body as IDebtModel
 
-    const updateDebt: IDebtModel = { clientId, bankerId, reason, value }
+      const updateDebt: IDebtModel = { clientId, bankerId, reason, value }
 
-    const debt = await updateDebtAsync(req.params.debtId, updateDebt)
+      const debt = await updateDebtAsync(req.params.debtId, updateDebt)
 
-    if (!debt) {
-      return next(new ErrorResponse('Debt not found', 404))
+      if (!debt) {
+        return next(new ErrorResponse('Debt not found', 404))
+      }
+
+      res.json({ sucess: true, debt })
     }
-
-    res.json({ sucess: true, debt })
-  })
+  );
 
   // @desc      Delete debt
   // @route     DELETE /api/v1/debts/:debtId
-  public deleteDebt = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const debt = await deleteDebtAsync(req.params.debtId)
+  deleteDebt = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const debt = await deleteDebtAsync(req.params.debtId)
 
-    if (!debt) {
-      return next(new ErrorResponse('Debt not found', 404))
+      if (!debt) {
+        return next(new ErrorResponse('Debt not found', 404))
+      }
+
+      res.json({ sucess: true, debt: {} })
     }
-
-    res.json({ sucess: true, debt: {} })
-  })
+  );
 }
 
 export { DebtController }

@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Application } from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -9,7 +9,7 @@ import { debtRouter } from '@routes/debt.router'
 import { bankerRouter } from '@routes/banker.router'
 
 class App {
-  public express: express.Application
+  public express: Application
 
   public constructor () {
     dotenv.config({ path: './src/config/config.env' })

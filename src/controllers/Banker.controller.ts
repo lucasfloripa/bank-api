@@ -4,68 +4,84 @@ import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
 import { BankerService } from '@services/Banker.service'
-const { getBankersAsync, getBankerAsync, createBankerAsync, updateBankerAsync, deleteBankerAsync } = new BankerService()
+const {
+  getBankersAsync,
+  getBankerAsync,
+  createBankerAsync,
+  updateBankerAsync,
+  deleteBankerAsync
+} = new BankerService()
 
 class BankerController {
   // @desc      Get bankers
   // @route     GET /api/v1/bankers
-  public getBankers = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const bankers = await getBankersAsync()
+  getBankers = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const bankers = await getBankersAsync()
 
-    if (!bankers) {
-      return next(new ErrorResponse('Banker not found', 404))
+      if (!bankers) {
+        return next(new ErrorResponse('Banker not found', 404))
+      }
+
+      res.json({ success: true, count: bankers.length, bankers })
     }
-
-    res.json({ success: true, count: bankers.length, bankers })
-  })
+  );
 
   // @desc      Get single banker
   // @route     GET /api/v1/bankers/:bankerId
-  public getBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const banker = await getBankerAsync(req.params.bankerId)
+  getBanker = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const banker = await getBankerAsync(req.params.bankerId)
 
-    if (!banker) {
-      return next(new ErrorResponse('Banker not found', 404))
+      if (!banker) {
+        return next(new ErrorResponse('Banker not found', 404))
+      }
+
+      res.json({ success: true, banker })
     }
-
-    res.json({ success: true, banker })
-  })
+  );
 
   // @desc      Create banker
   // @route     POST /api/v1/bankers
-  public createBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const banker = await createBankerAsync(req.body)
+  createBanker = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const banker = await createBankerAsync(req.body)
 
-    if (!banker) {
-      return next(new ErrorResponse('Banker not created', 500))
+      if (!banker) {
+        return next(new ErrorResponse('Banker not created', 500))
+      }
+
+      res.json({ success: true, banker })
     }
-
-    res.json({ success: true, banker })
-  })
+  );
 
   // @desc      Update banker
   // @route     PUT /api/v1/bankers/:bankerId
-  public updateBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const banker = await updateBankerAsync(req.params.bankerId, req.body)
+  updateBanker = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const banker = await updateBankerAsync(req.params.bankerId, req.body)
 
-    if (!banker) {
-      return next(new ErrorResponse('Banker not found', 404))
+      if (!banker) {
+        return next(new ErrorResponse('Banker not found', 404))
+      }
+
+      res.json({ success: true, banker })
     }
-
-    res.json({ success: true, banker })
-  })
+  );
 
   // @desc      Delete banker
   // @route     DELETE /api/v1/bankers/:bankerId
-  public deleteBanker = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const banker = await deleteBankerAsync(req.params.bankerId)
+  deleteBanker = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const banker = await deleteBankerAsync(req.params.bankerId)
 
-    if (!banker) {
-      return next(new ErrorResponse('Banker not found', 404))
+      if (!banker) {
+        return next(new ErrorResponse('Banker not found', 404))
+      }
+
+      res.json({ success: true, banker: {} })
     }
-
-    res.json({ success: true, banker: {} })
-  })
+  );
 }
 
 export { BankerController }

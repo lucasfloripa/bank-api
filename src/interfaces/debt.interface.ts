@@ -3,4 +3,5 @@ export interface IDebtModel {
   bankerId: string
   reason: string
   value: number
+  paid?: boolean
 }

@@ -3,13 +3,13 @@ import { Client } from '@models/client.module'
 import { IDebtModel } from '@interfaces/debt.interface'
 
 class DebtService {
-  public getDebtAsync = async (debtId: string) => {
+  getDebtAsync = async (debtId: string) => {
     const debt = await Debt.findById(debtId)
 
     return debt
-  }
+  };
 
-  public getDebtsAsync = async (userId?: string) => {
+  getDebtsAsync = async (userId?: string) => {
     let debts: IDebtModel[]
 
     if (userId === undefined) {
@@ -19,37 +19,44 @@ class DebtService {
     }
 
     return debts
-  }
+  };
 
-  public createDebtAsync = async (newDebt: IDebtModel) => {
+  createDebtAsync = async (newDebt: IDebtModel) => {
     const debt = await Debt.create(newDebt)
 
     return debt
-  }
+  };
 
-  public updateDebtAsync = async (debtId: string, updatedDebt: IDebtModel) => {
+  updateDebtAsync = async (debtId: string, updatedDebt: IDebtModel) => {
     let debt = await Debt.findById(debtId)
 
-    debt = await Debt.findByIdAndUpdate(debtId, updatedDebt, { new: true, runValidators: true })
+    debt = await Debt.findByIdAndUpdate(debtId, updatedDebt, {
+      new: true,
+      runValidators: true
+    })
 
     return debt
-  }
+  };
 
-  public deleteDebtAsync = async (debtId: string) => {
+  deleteDebtAsync = async (debtId: string) => {
     const debt = await Debt.findById(debtId)
 
     return await debt.remove()
-  }
+  };
 
-  public pushNewDebtToClient = async (clientId: string, debtId: string) => {
+  pushNewDebtToClient = async (clientId: string, debtId: string) => {
     let client = await Client.findById(clientId)
 
     if (client) {
-      client = await Client.findByIdAndUpdate(clientId, { $push: { debts: debtId } }, { new: true, runValidators: true })
+      client = await Client.findByIdAndUpdate(
+        clientId,
+        { $push: { debts: debtId } },
+        { new: true, runValidators: true }
+      )
     }
 
     return client
-  }
+  };
 }
 
 export { DebtService }
