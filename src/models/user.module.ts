@@ -29,7 +29,8 @@ const UserSchema: Schema<UserModel> = new Schema(
     password: {
       type: String,
       minlength: 6,
-      required: true
+      required: true,
+      select: false
     },
     gender: {
       type: Number,
@@ -54,17 +55,22 @@ const UserSchema: Schema<UserModel> = new Schema(
   userOptions
 )
 
-// Encrypt password on create
+// encrypt password on create
 UserSchema.pre<UserModel>('save', async function () {
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
 })
 
-// JWT sign and return
-UserSchema.methods.getSignedJwtToken = () : string => {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+// sign JWT and return
+UserSchema.methods.getSignedJwtToken = (_id: string) => {
+  return jwt.sign({ id: _id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE
   })
+}
+
+// match user entered password to hashed password in database
+UserSchema.methods.matchPassword = async (enteredPassword: string, userPassword: string) => {
+  return await bcrypt.compare(enteredPassword, userPassword)
 }
 
 const User: Model<UserModel> = model<UserModel>('User', UserSchema)

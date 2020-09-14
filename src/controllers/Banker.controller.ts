@@ -4,6 +4,7 @@ import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
 import { BankerService } from '@services/Banker.service'
+import { IBankerModel } from '@interfaces/banker.interface'
 const {
   getBankersAsync,
   getBankerAsync,
@@ -45,13 +46,17 @@ class BankerController {
   // @route     POST /api/v1/bankers
   createBanker = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const banker = await createBankerAsync(req.body)
+      const { firstName, lastName, email, birth, gender, address, bank, password } = req.body as IBankerModel
+
+      const newBanker: IBankerModel = { firstName, lastName, email, birth, gender, address, bank, password }
+
+      const banker = await createBankerAsync(newBanker)
 
       if (!banker) {
         return next(new ErrorResponse('Banker not created', 500))
       }
 
-      const token: string = banker.getSignedJwtToken()
+      const token: string = banker.getSignedJwtToken(banker._id)
 
       res.json({ success: true, token, banker })
     }
@@ -61,7 +66,11 @@ class BankerController {
   // @route     PUT /api/v1/bankers/:bankerId
   updateBanker = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const banker = await updateBankerAsync(req.params.bankerId, req.body)
+      const { firstName, lastName, email, birth, gender, address, bank, password } = req.body as IBankerModel
+
+      const newBanker: IBankerModel = { firstName, lastName, email, birth, gender, address, bank, password }
+
+      const banker = await updateBankerAsync(req.params.bankerId, newBanker)
 
       if (!banker) {
         return next(new ErrorResponse('Banker not found', 404))

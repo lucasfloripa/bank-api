@@ -6,7 +6,8 @@ export interface IUserModel {
   gender: Gender
   birth: string
   address: IUserAddress
-  getSignedJwtToken: Function
+  getSignedJwtToken?: Function
+  matchPassword?: Function
 }
 
 interface IUserAddress {

@@ -4,6 +4,7 @@ import { ErrorResponse } from '@utils/ErrorResponse'
 
 // Dependency Injection
 import { ClientService } from '@services/Client.service'
+import { IClientModel } from '@interfaces/client.interface'
 const {
   getClientsAsync,
   getClientAsync,
@@ -45,13 +46,17 @@ class ClientController {
   // @route     POST /api/v1/clients
   createClient = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const client = await createClientAsync(req.body)
+      const { firstName, lastName, email, birth, gender, address, password } = req.body as IClientModel
+
+      const newClient: IClientModel = { firstName, lastName, email, birth, gender, address, password }
+
+      const client = await createClientAsync(newClient)
 
       if (!client) {
         return next(new ErrorResponse('Client not created', 500))
       }
 
-      const token: string = client.getSignedJwtToken()
+      const token: string = client.getSignedJwtToken(client._id)
 
       res.json({ success: true, token, client })
     }
@@ -61,7 +66,11 @@ class ClientController {
   // @route     PUT /api/v1/clients/:clientId
   updateClient = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const client = await updateClientAsync(req.params.clientId, req.body)
+      const { firstName, lastName, email, birth, gender, address, password } = req.body as IClientModel
+
+      const newClient: IClientModel = { firstName, lastName, email, birth, gender, address, password }
+
+      const client = await updateClientAsync(req.params.clientId, newClient)
 
       if (!client) {
         return next(new ErrorResponse('Client not found', 404))
