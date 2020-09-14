@@ -1,7 +1,7 @@
 import express from 'express'
 import { debtRouter } from '@routes/debt.router'
 
-// Dependecy Injectiopn
+// Dependecy Injection
 import { UserController } from '@controllers/User.controller'
 const { getUsers, getUser, deleteUser } = new UserController()
 

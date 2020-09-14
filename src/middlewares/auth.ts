@@ -2,14 +2,15 @@ import { Response, NextFunction } from 'express'
 import { asyncHandler } from '@middlewares/asyncHandler'
 import { ErrorResponse } from '@utils/ErrorResponse'
 import jwt from 'jsonwebtoken'
-import { User } from '@models/user.module'
 import { IGetUserAuthInfoRequest, IUserTokenDecoded } from '@interfaces/auth.interface'
+import { UserService } from '@services/User.service'
+const { getUserAsync } = new UserService()
 
 const protect = asyncHandler(async (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
   const { authorization } = req.headers
   let token: string
 
-  if (authorization?.startsWith('Beared')) {
+  if (authorization?.startsWith('Bearer')) {
     token = authorization.split(' ')[1]
   }
 
@@ -20,7 +21,9 @@ const protect = asyncHandler(async (req: IGetUserAuthInfoRequest, res: Response,
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    req.user = await User.findById((decoded as IUserTokenDecoded).id)
+    const user = await getUserAsync((decoded as IUserTokenDecoded).id)
+
+    req.userId = user._id
 
     next()
   } catch (error) {

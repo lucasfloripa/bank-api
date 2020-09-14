@@ -1,9 +1,8 @@
 import { Request } from 'express'
-import { IUserModel } from './user.interface'
 
 export interface IAuthLogin {
-  enteredEmail: string
-  enteredPassword: string
+  email: string
+  password: string
 }
 
 export interface IUserTokenDecoded {
@@ -11,5 +10,5 @@ export interface IUserTokenDecoded {
 }
 
 export interface IGetUserAuthInfoRequest extends Request {
-  user: IUserModel
+  userId: string
 }
