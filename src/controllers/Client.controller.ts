@@ -51,7 +51,9 @@ class ClientController {
         return next(new ErrorResponse('Client not created', 500))
       }
 
-      res.json({ success: true, client })
+      const token: string = client.getSignedJwtToken()
+
+      res.json({ success: true, token, client })
     }
   );
 

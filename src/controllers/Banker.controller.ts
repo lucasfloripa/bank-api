@@ -51,7 +51,9 @@ class BankerController {
         return next(new ErrorResponse('Banker not created', 500))
       }
 
-      res.json({ success: true, banker })
+      const token: string = banker.getSignedJwtToken()
+
+      res.json({ success: true, token, banker })
     }
   );
 

@@ -1,5 +1,7 @@
 import { Document, Schema, Model, model } from 'mongoose'
 import { IUserModel } from '@interfaces/user.interface'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export interface UserModel extends IUserModel, Document {}
 
@@ -51,6 +53,19 @@ const UserSchema: Schema<UserModel> = new Schema(
   },
   userOptions
 )
+
+// Encrypt password on create
+UserSchema.pre<UserModel>('save', async function () {
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+})
+
+// JWT sign and return
+UserSchema.methods.getSignedJwtToken = () : string => {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE
+  })
+}
 
 const User: Model<UserModel> = model<UserModel>('User', UserSchema)
 

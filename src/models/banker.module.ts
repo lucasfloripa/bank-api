@@ -7,7 +7,7 @@ export interface BankerModel extends IBankerModel, Document {}
 User.discriminator(
   'Banker',
   new Schema({
-    bank: [{ type: String, required: true }]
+    bank: { type: String, required: true }
   })
 )
 
