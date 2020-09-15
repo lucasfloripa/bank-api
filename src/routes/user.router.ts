@@ -1,4 +1,5 @@
 import express from 'express'
+import { protect, authorize } from '@middlewares/auth'
 import { debtRouter } from '@routes/debt.router'
 
 // Dependecy Injection
@@ -11,9 +12,9 @@ const userRouter = express.Router()
 userRouter.use('/:userId/debts', debtRouter)
 
 userRouter.route('/')
-  .get(getUsers)
+  .get(protect, authorize('Admin'), getUsers)
 userRouter.route('/:userId')
-  .get(getUser)
-  .delete(deleteUser)
+  .get(protect, authorize('Admin'), getUser)
+  .delete(protect, authorize('Admin'), deleteUser)
 
 export { userRouter }

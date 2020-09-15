@@ -31,4 +31,15 @@ const protect = asyncHandler(async (req: IGetUserAuthInfoRequest, res: Response,
   }
 })
 
-export { protect }
+const authorize = (...userTypes) => {
+  return async (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+    const user = await getUserAsync(req.userId)
+
+    if (!userTypes.includes(user.userType)) {
+      return next(new ErrorResponse(`User role ${user.userType} is not authorized to access this route`, 403))
+    }
+    next()
+  }
+}
+
+export { protect, authorize }

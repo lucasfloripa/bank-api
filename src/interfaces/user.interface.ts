@@ -1,4 +1,5 @@
 export interface IUserModel {
+  userType?: string
   firstName: string
   lastName?: string
   email: string
