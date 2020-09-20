@@ -6,6 +6,10 @@ class AuthService {
 
     return auth
   };
+
+  logoutAsync = async () => {
+    return false
+  }
 }
 
 export { AuthService }

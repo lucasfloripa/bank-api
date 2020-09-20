@@ -6,12 +6,12 @@ import { IAuthLogin, IGetUserAuthInfoRequest } from '@interfaces/auth.interface'
 // Dependency Injection
 import { AuthService } from '@services/Auth.service'
 import { UserService } from '@services/User.service'
-const { loginAsync } = new AuthService()
+const { loginAsync, logoutAsync } = new AuthService()
 const { getUserAsync } = new UserService()
 
 class AuthController {
   // @desc      Login
-  // @route     GET /api/v1/auth/login
+  // @route     POST /api/v1/auth/login
   login = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const { email, password } = req.body as IAuthLogin
@@ -37,6 +37,18 @@ class AuthController {
       res.status(200).json({ success: true, token })
     }
   )
+
+  // @desc      Logout
+  // @route     POST /api/v1/auth/logout
+  logout = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const auth = await logoutAsync()
+
+    if (!auth) {
+      return next(new ErrorResponse('Logout fail', 400))
+    }
+
+    res.status(200).json({ sucess: true, auth })
+  })
 
   // @desc      Get current user
   // @route     GET /api/v1/auth/me
