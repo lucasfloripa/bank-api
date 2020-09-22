@@ -33,9 +33,7 @@ const UserSchema: Schema<UserModel> = new Schema(
       select: false
     },
     gender: {
-      type: Number,
-      enum: [0, 1],
-      default: 0,
+      type: String,
       required: true
     },
     birth: {

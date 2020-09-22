@@ -43,7 +43,7 @@ class AuthController {
   logout = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const auth = await logoutAsync()
 
-    if (!auth) {
+    if (auth !== false) {
       return next(new ErrorResponse('Logout fail', 400))
     }
 

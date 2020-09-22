@@ -4,7 +4,7 @@ export interface IUserModel {
   lastName?: string
   email: string
   password: string
-  gender: Gender
+  gender: string
   birth: string
   address: IUserAddress
   getSignedJwtToken?: Function
@@ -19,9 +19,4 @@ interface IUserAddress {
   city: string
   state: string
   country: string
-}
-
-enum Gender {
-  Male = 1,
-  Female = 0
 }
