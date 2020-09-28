@@ -46,9 +46,9 @@ class ClientController {
   // @route     POST /api/v1/clients
   createClient = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { firstName, lastName, email, birth, gender, address, password } = req.body as IClientModel
+      const { name, email, password } = req.body as IClientModel
 
-      const newClient: IClientModel = { firstName, lastName, email, birth, gender, address, password }
+      const newClient: IClientModel = { name, email, password }
 
       const client = await createClientAsync(newClient)
 
@@ -66,9 +66,9 @@ class ClientController {
   // @route     PUT /api/v1/clients/:clientId
   updateClient = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { firstName, lastName, email, birth, gender, address, password } = req.body as IClientModel
+      const { name, email, password } = req.body as IClientModel
 
-      const newClient: IClientModel = { firstName, lastName, email, birth, gender, address, password }
+      const newClient: IClientModel = { name, email, password }
 
       const client = await updateClientAsync(req.params.clientId, newClient)
 

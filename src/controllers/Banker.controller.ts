@@ -46,9 +46,9 @@ class BankerController {
   // @route     POST /api/v1/bankers
   createBanker = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { firstName, lastName, email, birth, gender, address, bank, password } = req.body as IBankerModel
+      const { name, email, password, bank } = req.body as IBankerModel
 
-      const newBanker: IBankerModel = { firstName, lastName, email, birth, gender, address, bank, password }
+      const newBanker: IBankerModel = { name, email, password, bank }
 
       const banker = await createBankerAsync(newBanker)
 
@@ -66,9 +66,9 @@ class BankerController {
   // @route     PUT /api/v1/bankers/:bankerId
   updateBanker = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { firstName, lastName, email, birth, gender, address, bank, password } = req.body as IBankerModel
+      const { name, email, password, bank } = req.body as IBankerModel
 
-      const newBanker: IBankerModel = { firstName, lastName, email, birth, gender, address, bank, password }
+      const newBanker: IBankerModel = { name, email, password, bank }
 
       const banker = await updateBankerAsync(req.params.bankerId, newBanker)
 

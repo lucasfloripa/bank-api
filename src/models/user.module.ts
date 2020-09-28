@@ -14,12 +14,9 @@ const userOptions = {
 
 const UserSchema: Schema<UserModel> = new Schema(
   {
-    firstName: {
+    name: {
       type: String,
       required: true
-    },
-    lastName: {
-      type: String
     },
     email: {
       type: String,
@@ -31,18 +28,6 @@ const UserSchema: Schema<UserModel> = new Schema(
       minlength: 6,
       required: true,
       select: false
-    },
-    gender: {
-      type: String,
-      required: true
-    },
-    birth: {
-      type: String,
-      required: true
-    },
-    address: {
-      type: String,
-      required: true
     }
   },
   userOptions
