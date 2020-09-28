@@ -6,17 +6,7 @@ export interface IUserModel {
   password: string
   gender: string
   birth: string
-  address: IUserAddress
+  address: string
   getSignedJwtToken?: Function
   matchPassword?: Function
-}
-
-interface IUserAddress {
-  street: string
-  number?: number
-  complement?: string
-  district: string
-  city: string
-  state: string
-  country: string
 }
