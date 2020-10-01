@@ -11,10 +11,15 @@ const DebtSchema: Schema<DebtModel> = new Schema({
   },
   bankerId: {
     type: Types.ObjectId,
-    ref: 'Banker',
-    required: true
+    ref: 'Banker'
   },
-  reason: {
+  title: {
+    type: String,
+    trim: true,
+    maxlength: [20, 'Título da dívida não poder ter mais que 20 caractéres'],
+    required: [true, 'Por favor informe o título da dívida']
+  },
+  description: {
     type: String,
     trim: true,
     maxlength: [50, 'Motivo da dívida não poder ter mais que 50 caractéres'],

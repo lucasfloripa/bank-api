@@ -9,13 +9,13 @@ class DebtService {
     return debt
   };
 
-  getDebtsAsync = async (userId?: string) => {
+  getDebtsAsync = async (clientId?: string) => {
     let debts: IDebtModel[]
 
-    if (userId === undefined) {
+    if (clientId === undefined) {
       debts = await Debt.find()
     } else {
-      debts = await Debt.find({ userId })
+      debts = await Debt.find({ clientId })
     }
 
     return debts

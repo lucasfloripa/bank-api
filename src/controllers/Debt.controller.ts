@@ -50,9 +50,9 @@ class DebtController {
   // @route     POST /api/v1/debts/
   createDebt = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { clientId, bankerId, reason, value } = req.body as IDebtModel
+      const { clientId, bankerId, title, description, value } = req.body as IDebtModel
 
-      const newDebt: IDebtModel = { clientId, bankerId, reason, value }
+      const newDebt: IDebtModel = { clientId, bankerId, title, description, value }
 
       const debt = await createDebtAsync(newDebt)
 
@@ -74,9 +74,9 @@ class DebtController {
   // @route     PUT /api/v1/debts/:debtId
   updateDebt = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { clientId, bankerId, reason, value } = req.body as IDebtModel
+      const { clientId, bankerId, title, description, value } = req.body as IDebtModel
 
-      const updateDebt: IDebtModel = { clientId, bankerId, reason, value }
+      const updateDebt: IDebtModel = { clientId, bankerId, title, description, value }
 
       const debt = await updateDebtAsync(req.params.debtId, updateDebt)
 

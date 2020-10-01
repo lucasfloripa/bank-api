@@ -8,11 +8,11 @@ const { getDebts, getDebt, createDebt, updateDebt, deleteDebt } = new DebtContro
 const debtRouter = express.Router({ mergeParams: true })
 
 debtRouter.route('/')
-  .get(protect, authorize('Banker', 'Admin'), getDebts)
-  .post(protect, authorize('Banker'), createDebt)
+  .get(protect, authorize('Client', 'Banker', 'Admin'), getDebts)
+  .post(protect, authorize('Client', 'Banker'), createDebt)
 debtRouter.route('/:debtId')
   .get(protect, authorize('Client', 'Banker', 'Admin'), getDebt)
   .put(protect, authorize('Client', 'Banker', 'Admin'), updateDebt)
-  .delete(protect, authorize('Banker'), deleteDebt)
+  .delete(protect, authorize('Client', 'Banker'), deleteDebt)
 
 export { debtRouter }
