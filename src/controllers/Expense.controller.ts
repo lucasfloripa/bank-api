@@ -47,9 +47,9 @@ class ExpenseController {
   // @route     POST /api/v1/expenses
   createExpense = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { clientId, title, description, value } = req.body as IExpenseModel
+      const { clientId, title, description, value, type } = req.body as IExpenseModel
 
-      const newExpense: IExpenseModel = { clientId, title, description, value }
+      const newExpense: IExpenseModel = { clientId, title, description, value, type }
 
       const expense = await createExpenseAsync(newExpense)
 
@@ -65,9 +65,9 @@ class ExpenseController {
   // @route     PUT /api/v1/expenses/:expenseId
   updateExpense = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { clientId, title, description, value } = req.body as IExpenseModel
+      const { clientId, title, description, value, type } = req.body as IExpenseModel
 
-      const newExpense: IExpenseModel = { clientId, title, description, value }
+      const newExpense: IExpenseModel = { clientId, title, description, value, type }
 
       const expense = await updateExpenseAsync(req.params.expenseId, newExpense)
 

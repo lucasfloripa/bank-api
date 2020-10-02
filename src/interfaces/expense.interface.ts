@@ -1,3 +1,5 @@
 import { IBillModel } from './bill.interface'
 
-export interface IExpenseModel extends IBillModel {}
+export interface IExpenseModel extends IBillModel {
+  type: string
+}

@@ -1,5 +1,5 @@
 import express from 'express'
-import { protect, authorize } from '@middlewares/auth'
+import { protect } from '@middlewares/auth'
 import { debtRouter } from '@routes/debt.router'
 import { expenseRouter } from '@routes/expense.router'
 import { billRouter } from '@routes/bill.router'
@@ -15,10 +15,7 @@ userRouter.use('/:userId/debts', debtRouter)
 userRouter.use('/:userId/expenses', expenseRouter)
 userRouter.use('/:userId/bills', billRouter)
 
-userRouter.route('/')
-  .get(protect, authorize('Admin'), getUsers)
-userRouter.route('/:userId')
-  .get(protect, authorize('Admin'), getUser)
-  .delete(protect, authorize('Admin'), deleteUser)
+userRouter.route('/').get(protect, getUsers)
+userRouter.route('/:userId').get(protect, getUser).delete(protect, deleteUser)
 
 export { userRouter }

@@ -7,7 +7,7 @@ export interface ExpenseModel extends IExpenseModel, Document {}
 Bill.discriminator(
   'Expense',
   new Schema({
-    type: [{ type: String, required: true }]
+    type: { type: String, required: true }
   })
 )
 

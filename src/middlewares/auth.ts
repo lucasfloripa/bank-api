@@ -10,8 +10,6 @@ const protect = asyncHandler(async (req: IGetUserAuthInfoRequest, res: Response,
   const { authorization } = req.headers
   let token: string
 
-  console.log(authorization)
-
   if (authorization?.startsWith('Bearer')) {
     token = authorization.split(' ')[1]
   }
