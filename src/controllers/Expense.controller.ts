@@ -16,6 +16,7 @@ const {
 class ExpenseController {
   // @desc      Get expenses
   // @route     GET /api/v1/expenses
+  // @route     GET /api/v1/users/:userId/expenses
   getExpenses = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const expenses = await getExpensesAsync()

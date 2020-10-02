@@ -5,7 +5,7 @@ import { protect, authorize } from '@middlewares/auth'
 import { ExpenseController } from '@controllers/Expense.controller'
 const { getExpenses, getExpense, createExpense, updateExpense, deleteExpense } = new ExpenseController()
 
-const expenseRouter = express.Router()
+const expenseRouter = express.Router({ mergeParams: true })
 
 expenseRouter.route('/')
   .get(protect, authorize('Banker', 'Admin'), getExpenses)

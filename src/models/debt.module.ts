@@ -1,52 +1,19 @@
 import { Document, Schema, Types, Model, model } from 'mongoose'
+import { Bill } from '@models/bill.module'
 import { IDebtModel } from '@interfaces/debt.interface'
 
 export interface DebtModel extends IDebtModel, Document {}
 
-const DebtSchema: Schema<DebtModel> = new Schema({
-  clientId: {
-    type: Types.ObjectId,
-    ref: 'Client',
-    required: true
-  },
-  bankerId: {
-    type: Types.ObjectId,
-    ref: 'Banker'
-  },
-  title: {
-    type: String,
-    trim: true,
-    maxlength: [20, 'Título da dívida não poder ter mais que 20 caractéres'],
-    required: [true, 'Por favor informe o título da dívida']
-  },
-  description: {
-    type: String,
-    trim: true,
-    maxlength: [50, 'Motivo da dívida não poder ter mais que 50 caractéres'],
-    required: [true, 'Por favor informe o motivo da dívida']
-  },
-  value: {
-    type: Number,
-    trim: true,
-    maxlength: [15, 'Valor não poder ter mais que 15 caractéres'],
-    required: [true, 'Por favor informe o valor da dívida']
-  },
-  paid: {
-    type: Boolean,
-    default: false
-  }
-}, { timestamps: true })
+Bill.discriminator(
+  'Debt',
+  new Schema({
+    bankerId: {
+      type: Types.ObjectId,
+      ref: 'Banker'
+    }
+  })
+)
 
-// Cascade remove debts Ref on clients when the debt is deleted
-DebtSchema.pre('remove', function (next) {
-  this.model('Client').update(
-    {},
-    { $pull: { debts: this._id } },
-    { multi: true },
-    next
-  )
-})
-
-const Debt: Model<DebtModel> = model<DebtModel>('Debt', DebtSchema)
+const Debt: Model<DebtModel> = model<DebtModel>('Debt')
 
 export { Debt }

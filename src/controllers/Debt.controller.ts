@@ -2,11 +2,9 @@ import { Request, Response, NextFunction } from 'express'
 import { asyncHandler } from '@middlewares/asyncHandler'
 import { ErrorResponse } from '@utils/ErrorResponse'
 
-// Interfaces
-import { IDebtModel } from '@interfaces/debt.interface'
-
 // Dependency Injection
 import { DebtService } from '@services/Debt.service'
+import { IDebtModel } from '@interfaces/debt.interface'
 const {
   getDebtAsync,
   getDebtsAsync,
