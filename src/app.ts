@@ -8,6 +8,7 @@ import { clientRouter } from '@routes/client.router'
 import { debtRouter } from '@routes/debt.router'
 import { bankerRouter } from '@routes/banker.router'
 import { authRouter } from '@routes/auth.router'
+import { billRouter } from '@routes/bill.router'
 
 class App {
   public express: Application
@@ -39,6 +40,7 @@ class App {
     this.express.use('/api/v1/debts', debtRouter)
     this.express.use('/api/v1/bankers', bankerRouter)
     this.express.use('/api/v1/auth', authRouter)
+    this.express.use('/api/v1/bill', billRouter)
   }
 }
 
