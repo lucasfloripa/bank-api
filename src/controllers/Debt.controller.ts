@@ -72,9 +72,9 @@ class DebtController {
   // @route     PUT /api/v1/debts/:debtId
   updateDebt = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const { clientId, bankerId, title, description, value } = req.body as IDebtModel
+      const { clientId, bankerId, title, description, value, paid } = req.body as IDebtModel
 
-      const updateDebt: IDebtModel = { clientId, bankerId, title, description, value }
+      const updateDebt: IDebtModel = { clientId, bankerId, title, description, value, paid }
 
       const debt = await updateDebtAsync(req.params.debtId, updateDebt)
 
